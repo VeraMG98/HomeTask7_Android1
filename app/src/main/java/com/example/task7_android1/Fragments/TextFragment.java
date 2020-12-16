@@ -1,13 +1,17 @@
 package com.example.task7_android1.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.task7_android1.MyModel;
 import com.example.task7_android1.R;
@@ -22,6 +26,7 @@ public class TextFragment extends Fragment {
 
     private TextView txtTitle;
     private TextView txtSubtitle;
+    private ImageView imgPhoto;
 
     MyModel myModel;
 
@@ -52,12 +57,14 @@ public class TextFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_text, container, false);
         txtTitle = view.findViewById(R.id.txt_title);
         txtSubtitle = view.findViewById(R.id.txt_subtitle);
+        imgPhoto = view.findViewById(R.id.img_photo_text_f);
         return view;
     }
 
     public void displayDetails(MyModel model) {
-        this.myModel = model;
-        txtTitle.setText(myModel.getTitle());
-        txtSubtitle.setText(myModel.getSubtitle());
+        txtTitle.setText(model.getTitle());
+        txtSubtitle.setText(model.getSubtitle());
+        imgPhoto.setImageDrawable(
+                ContextCompat.getDrawable(getContext(), model.getPhoto()));
     }
 }

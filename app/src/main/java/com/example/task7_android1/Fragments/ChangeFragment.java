@@ -1,9 +1,7 @@
 package com.example.task7_android1.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.task7_android1.InterfaceMassage;
+import com.example.task7_android1.IFragments;
 import com.example.task7_android1.MainActivity;
 import com.example.task7_android1.MyModel;
 import com.example.task7_android1.R;
@@ -20,11 +18,8 @@ import com.example.task7_android1.RecyclerAdapter;
 
 import java.util.ArrayList;
 
-public class ChangeFragment extends Fragment implements RecyclerAdapter.IFragments {
+public class ChangeFragment extends Fragment implements IFragments {
     private RecyclerView recyclerView;
-
-    InterfaceMassage listener;
-    MyModel myModel1;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -39,12 +34,6 @@ public class ChangeFragment extends Fragment implements RecyclerAdapter.IFragmen
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        listener = (InterfaceMassage) context;
     }
 
     @Override
@@ -68,7 +57,7 @@ public class ChangeFragment extends Fragment implements RecyclerAdapter.IFragmen
 
     private void setUpRecyclerView() {
         ArrayList<MyModel> list = new ArrayList<>();
-        list.add(new MyModel("Title", "Subtitle"));
+        list.add(new MyModel("Title", "Subtitle", R.drawable.photo_icon));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecyclerAdapter adapter = new RecyclerAdapter(list, getContext());
         adapter.setOnClickListener(this);
@@ -77,12 +66,7 @@ public class ChangeFragment extends Fragment implements RecyclerAdapter.IFragmen
 
     @Override
     public void displayDetail(MyModel myModel) {
-        this.myModel1 = myModel;
-        MainActivity activity = (MainActivity) getActivity();
-        if (!activity.getScreenOrientation()) {
-            listener.sendInfoTextFragment(myModel1);
-        } else {
-            activity.displayDetails(myModel1);
-        }
+            MainActivity activity = (MainActivity) getActivity();
+            activity.displayDetail(myModel);
     }
 }

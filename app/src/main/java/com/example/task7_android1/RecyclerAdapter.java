@@ -1,19 +1,22 @@
 package com.example.task7_android1;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> {
-    private ArrayList<MyModel> list;
-    private Context context;
+    private final ArrayList<MyModel> list;
+    private final Context context;
     public IFragments listener;
 
     public RecyclerAdapter(ArrayList<MyModel> list, Context context) {
@@ -40,8 +43,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
-        private TextView txtTitle;
-        private TextView txtSubtitle;
+        private final TextView txtTitle;
+        private final TextView txtSubtitle;
+        private final ImageView imgPhoto;
         private MyModel model;
         int position = 0;
 
@@ -50,14 +54,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             itemView.setOnClickListener(this);
             txtTitle = itemView.findViewById(R.id.txt_title_list);
             txtSubtitle = itemView.findViewById(R.id.txt_subtitle_list);
+            imgPhoto = itemView.findViewById(R.id.img_photo);
         }
 
+        @SuppressLint("UseCompatLoadingForDrawables")
         private void onBind(MyModel model, int position) {
             this.model = model;
             this.position = position;
-
             txtTitle.setText(model.getTitle());
             txtSubtitle.setText(model.getSubtitle());
+            imgPhoto.setImageDrawable(ContextCompat.getDrawable(context, model.getPhoto()));
         }
 
         @Override
@@ -72,7 +78,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         this.listener = iFragments;
     }
 
-    public interface IFragments {
-        void displayDetail(MyModel model);
-    }
 }
+
